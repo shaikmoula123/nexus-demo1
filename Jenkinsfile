@@ -18,12 +18,12 @@ pipeline{
       steps{
         script{
           def pom = readMavenPom file: 'pom.xml'
-          def repository = pom.version.endsWith("SNAPSHOT") ? 'javahome-snapshot' : 'javahome-release'
+          def repository = pom.version.endsWith("SNAPSHOT") ? 'shaikmoula-devops-snapshot' : 'shaikmoula-devops'
           nexusArtifactUploader artifacts: 
           [[artifactId: 'myweb', classifier: '', file: "target/myweb-${pom.version}.war", type: 'war']], 
           credentialsId: 'nexus3', 
-          groupId: 'in.javahome', 
-          nexusUrl: '172.31.11.107:8081', 
+          groupId: 'in.shaikmoula123', 
+          nexusUrl: '172.31.20.251', 
           nexusVersion: 'nexus3', protocol: 'http', 
           repository: repository, 
           version: pom.version
@@ -45,8 +45,6 @@ pipeline{
         branch "uat"
       }
       steps{
-        sh "curl -u admin:admin -X GET 'http://65.0.19.206:8081/service/rest/v1/repositories'"
-        // How do you get latest artifact from nexus?
         echo "deploy to uat environment"
       }
     }
